@@ -9,21 +9,27 @@
 /* Begin PBXBuildFile section */
 		78C23EAD26513F48009ABA44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C23EAC26513F48009ABA44 /* AppDelegate.swift */; };
 		78C23EAF26513F48009ABA44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C23EAE26513F48009ABA44 /* SceneDelegate.swift */; };
-		78C23EB126513F48009ABA44 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C23EB026513F48009ABA44 /* ViewController.swift */; };
+		78C23EB126513F48009ABA44 /* LiveRatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C23EB026513F48009ABA44 /* LiveRatesViewController.swift */; };
 		78C23EB426513F48009ABA44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78C23EB226513F48009ABA44 /* Main.storyboard */; };
 		78C23EB626513F49009ABA44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78C23EB526513F49009ABA44 /* Assets.xcassets */; };
 		78C23EB926513F49009ABA44 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78C23EB726513F49009ABA44 /* LaunchScreen.storyboard */; };
+		78C23ED52651438C009ABA44 /* LiveCoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C23ED32651438C009ABA44 /* LiveCoinCell.swift */; };
+		78C23ED62651438C009ABA44 /* LiveCoinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78C23ED42651438C009ABA44 /* LiveCoinCell.xib */; };
+		78C23EDE26514A3A009ABA44 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C23EDD26514A3A009ABA44 /* SearchBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		78C23EA926513F48009ABA44 /* QuoteCoin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuoteCoin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C23EAC26513F48009ABA44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78C23EAE26513F48009ABA44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		78C23EB026513F48009ABA44 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		78C23EB026513F48009ABA44 /* LiveRatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveRatesViewController.swift; sourceTree = "<group>"; };
 		78C23EB326513F48009ABA44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		78C23EB526513F49009ABA44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78C23EB826513F49009ABA44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78C23EBA26513F49009ABA44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78C23ED32651438C009ABA44 /* LiveCoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCoinCell.swift; sourceTree = "<group>"; };
+		78C23ED42651438C009ABA44 /* LiveCoinCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LiveCoinCell.xib; sourceTree = "<group>"; };
+		78C23EDD26514A3A009ABA44 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +62,42 @@
 		78C23EAB26513F48009ABA44 /* QuoteCoin */ = {
 			isa = PBXGroup;
 			children = (
-				78C23EAC26513F48009ABA44 /* AppDelegate.swift */,
-				78C23EAE26513F48009ABA44 /* SceneDelegate.swift */,
-				78C23EB026513F48009ABA44 /* ViewController.swift */,
+				78C23ED1265142B0009ABA44 /* Views */,
+				78C23ED0265142A2009ABA44 /* ViewControllers */,
 				78C23EB226513F48009ABA44 /* Main.storyboard */,
 				78C23EB526513F49009ABA44 /* Assets.xcassets */,
+				78C23ECA26514005009ABA44 /* Template */,
+			);
+			path = QuoteCoin;
+			sourceTree = "<group>";
+		};
+		78C23ECA26514005009ABA44 /* Template */ = {
+			isa = PBXGroup;
+			children = (
+				78C23EAC26513F48009ABA44 /* AppDelegate.swift */,
+				78C23EAE26513F48009ABA44 /* SceneDelegate.swift */,
 				78C23EB726513F49009ABA44 /* LaunchScreen.storyboard */,
 				78C23EBA26513F49009ABA44 /* Info.plist */,
 			);
-			path = QuoteCoin;
+			name = Template;
+			sourceTree = "<group>";
+		};
+		78C23ED0265142A2009ABA44 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				78C23EB026513F48009ABA44 /* LiveRatesViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		78C23ED1265142B0009ABA44 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				78C23ED32651438C009ABA44 /* LiveCoinCell.swift */,
+				78C23ED42651438C009ABA44 /* LiveCoinCell.xib */,
+				78C23EDD26514A3A009ABA44 /* SearchBar.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,6 +128,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
+				ORGANIZATIONNAME = trudev;
 				TargetAttributes = {
 					78C23EA826513F48009ABA44 = {
 						CreatedOnToolsVersion = 12.4;
@@ -126,6 +160,7 @@
 			files = (
 				78C23EB926513F49009ABA44 /* LaunchScreen.storyboard in Resources */,
 				78C23EB626513F49009ABA44 /* Assets.xcassets in Resources */,
+				78C23ED62651438C009ABA44 /* LiveCoinCell.xib in Resources */,
 				78C23EB426513F48009ABA44 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,7 +172,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78C23EB126513F48009ABA44 /* ViewController.swift in Sources */,
+				78C23ED52651438C009ABA44 /* LiveCoinCell.swift in Sources */,
+				78C23EB126513F48009ABA44 /* LiveRatesViewController.swift in Sources */,
+				78C23EDE26514A3A009ABA44 /* SearchBar.swift in Sources */,
 				78C23EAD26513F48009ABA44 /* AppDelegate.swift in Sources */,
 				78C23EAF26513F48009ABA44 /* SceneDelegate.swift in Sources */,
 			);
@@ -287,8 +324,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 282WBJVQUT;
+				DEVELOPMENT_TEAM = DTTK359L6E;
 				INFOPLIST_FILE = QuoteCoin/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,8 +344,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 282WBJVQUT;
+				DEVELOPMENT_TEAM = DTTK359L6E;
 				INFOPLIST_FILE = QuoteCoin/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

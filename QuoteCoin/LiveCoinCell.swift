@@ -41,7 +41,7 @@ class LiveCoinCell: UICollectionViewCell {
         self.coin = coin
         nameLabel.text = coin.name
         symbolLabel.text = coin.symbol
-        priceLabel.text = "$" + "\(coin.priceUSD)"
+        priceLabel.text = coin.priceUSD.currencyFormatted
         percentChangeLabel.text = coin.percentChange > 0 ? "+\(coin.percentChange)%" : "\(coin.percentChange)%"
         percentChangeLabel.textColor = coin.percentChange > 0 ? .systemGreen : .systemRed
     }

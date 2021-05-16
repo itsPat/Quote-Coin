@@ -18,22 +18,28 @@ struct Coin {
 class LiveRatesViewController: UIViewController {
     
     // MARK: - Outlets
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
+    // MARK: - Properties
     
     var coins = [
-        Coin(name: "Bitcoin", symbol: "BTC", priceUSD: 50152, percentChange: 4.52),
-        Coin(name: "Ethereum", symbol: "ETH", priceUSD: 1828, percentChange: -1.52),
-        Coin(name: "Litecoin", symbol: "LTC", priceUSD: 259, percentChange: 2.52),
-        Coin(name: "Ripple", symbol: "XRP", priceUSD: 21, percentChange: 41.52),
+        Coin(name: "Bitcoin", symbol: "BTC", priceUSD: 50152.12, percentChange: 4.52),
+        Coin(name: "Ethereum", symbol: "ETH", priceUSD: 1828.25, percentChange: -1.52),
+        Coin(name: "Litecoin", symbol: "LTC", priceUSD: 259.49, percentChange: 2.52),
+        Coin(name: "Ripple", symbol: "XRP", priceUSD: 21.01, percentChange: 41.52),
     ]
 
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         LiveCoinCell.registerCell(in: collectionView)
         setupSearchBar()
     }
+    
+    // MARK: - Setup
     
     func setupSearchBar() {
         let searchBar = SearchBar(frame: .zero)
@@ -53,6 +59,9 @@ class LiveRatesViewController: UIViewController {
 
 }
 
+
+// MARK: - UICollectionViewDataSource
+
 extension LiveRatesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -65,6 +74,9 @@ extension LiveRatesViewController: UICollectionViewDataSource {
     
 }
 
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
 extension LiveRatesViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -73,6 +85,9 @@ extension LiveRatesViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
+
+
+// MARK: - UICollectionViewDelegate
 
 extension LiveRatesViewController: UICollectionViewDelegate {
     

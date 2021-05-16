@@ -17,10 +17,8 @@ extension Double {
     }
     
     var formattedAndTruncated: String {
-        if self >= 10000, self <= 999999 {
-            return String(format: "%.1fK", locale: Locale.current,self/1000).replacingOccurrences(of: ".0", with: "")
-        }
-        return String(format: "%.2f", abs(self))
+        guard 10000..<999999 ~= self else { return String(format: "%.2f", abs(self)) }
+        return String(format: "%.1fK", locale: .current, self/1000).replacingOccurrences(of: ".0", with: "")
     }
     
     var formatted: String {

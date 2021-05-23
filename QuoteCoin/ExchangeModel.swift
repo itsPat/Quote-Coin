@@ -8,7 +8,7 @@
 
 import Foundation
 /// Common ticker struct, used by all exchanges
-struct Ticker: Codable, Hashable {
+struct Ticker: Codable {
     var symbol: String?
     var price: String?
     var id: String?
@@ -62,6 +62,8 @@ extension KeyedDecodingContainer where K == AnyKey {
         for key in keyMap[key] ?? [] {
             if let value = try? decodeIfPresent(T.self, forKey: AnyKey(stringValue: key)) {
                 return value
+            } else {
+                return nil
             }
         }
 

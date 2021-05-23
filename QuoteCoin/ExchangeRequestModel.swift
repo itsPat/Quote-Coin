@@ -72,25 +72,25 @@ struct CoinBase: ExchangeRequestModel {
 struct Kraken: ExchangeRequestModel {
     var name: String = "Kraken"
     var scheme: String = "https"
-    var baseURL: String = "api.kraken.com/0"
+    var baseURL: String = "api.kraken.com"
     /// endpoint returning all Open, high Low and Close data for given pair - requires API key and sign
     /// - param: pair is required. I.E pair=XBTUSD
     /// - param interval is default 1. change to 1 5 15 30 60 240 1440 10080 or 21600 (in minutes)
     /// - param: since
-    var graphDataEndpoint: String = "/public/OHLC"
+    var graphDataEndpoint: String = "/0/public/OHLC"
     /// endpoint returning price info for specified coin pair
     /// - param: pair is required to get valid data. I.E pair=XBTUSD
-    var tickerPriceEndpoint: String = "/public/Ticker"
+    var tickerPriceEndpoint: String = "/0/public/Ticker"
     /// endpoint to return order book info for specified pair
     /// - param: pair is required. I.E pair=XBTUSD
-    var bookTickersEndpoint: String = "/public/Depth"
+    var bookTickersEndpoint: String = "/0/public/Depth"
 
     var dayAvgPriceEndpoint: String = ""
     /// gets tradeable asset pairs
-    var allPairsEndpoint: String = "/public/AssetPairs"
+    var allPairsEndpoint: String = "/0/public/AssetPairs"
     /// get info about all assets available
     /// - refine by adding query params: asset & aclass. I.E asset=XBT,ETH & aclass=currency
-    var allAssetsEndpoint: String = "/public/Assets"
+    var allAssetsEndpoint: String = "/0/public/Assets"
 }
 
 struct KuCoin: ExchangeRequestModel {

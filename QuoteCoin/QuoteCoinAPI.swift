@@ -15,14 +15,14 @@ class QuoteCoinAPI {
                                                            Kraken(),
                                                            KuCoin()]
     var exchanges: [ExchangeModel]?
-    var allTickers: Set<Ticker> = []
+    var allTickers = [Ticker]()
 
 
     func fetchAllExchanges(success: @escaping ([ExchangeModel]) -> Void,
                            failure: @escaping (Error?) -> Void) {
         var exchanges = [ExchangeModel]()
+        let group = DispatchGroup()
         for exchange in listOfPossibleExchanges {
-            let group = DispatchGroup()
             group.enter()
             self.fetchTickersFrom(exchange) { (model) in
                 exchanges.append(model)
@@ -58,9 +58,7 @@ class QuoteCoinAPI {
             returnedModel.tickers = self.getTickersFrom(data, exchange: exchange)
             if !returnedModel.tickers.isEmpty {
                 self.exchanges?.append(returnedModel)
-                for ticker in returnedModel.tickers {
-                    self.allTickers.insert(ticker)
-                }
+                self.allTickers += returnedModel.tickers
                 success(returnedModel)
             } else {
                 failure(error)
@@ -94,12 +92,11 @@ class QuoteCoinAPI {
             let model = try? JSONDecoder().decode(KuCoinTickerReseponse.self, from: data)
             return model?.data?.ticker ?? []
         case is Kraken:
-            let model = try? JSONDecoder().decode(KrakenTickerResponse.self, from: data)
+            var model: KrakenTickerResponse?
+            model = try? JSONDecoder().decode(KrakenTickerResponse.self, from: data)
             var tickers = [Ticker]()
             for (_, ticker) in model?.result ?? [:] {
-                if let ticker = ticker {
-                    tickers.append(ticker)
-                }
+                tickers.append(ticker)
             }
             return tickers
         case is BitFinex:

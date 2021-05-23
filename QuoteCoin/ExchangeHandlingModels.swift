@@ -10,7 +10,7 @@ import Foundation
 
 struct KrakenTickerResponse: Codable {
     let error: [String?]
-    let result: [String?: Ticker?]
+    let result: [String: Ticker]
 }
 
 struct KuCoinTickerReseponse: Codable {

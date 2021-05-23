@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		461BB103265AD7C300314108 /* ExchangeHandlingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461BB102265AD7C300314108 /* ExchangeHandlingModels.swift */; };
 		46BB106226518B4D00C4FEA4 /* ExchangeRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BB106126518B4D00C4FEA4 /* ExchangeRequestModel.swift */; };
 		46BB106526518B7900C4FEA4 /* QuoteCoinAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BB106426518B7900C4FEA4 /* QuoteCoinAPI.swift */; };
 		46BB106B2651917200C4FEA4 /* ExchangeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BB106A2651917200C4FEA4 /* ExchangeModel.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		461BB102265AD7C300314108 /* ExchangeHandlingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeHandlingModels.swift; sourceTree = "<group>"; };
 		46BB106126518B4D00C4FEA4 /* ExchangeRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRequestModel.swift; sourceTree = "<group>"; };
 		46BB106426518B7900C4FEA4 /* QuoteCoinAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCoinAPI.swift; sourceTree = "<group>"; };
 		46BB106A2651917200C4FEA4 /* ExchangeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeModel.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 				46BB106126518B4D00C4FEA4 /* ExchangeRequestModel.swift */,
 				46BB106426518B7900C4FEA4 /* QuoteCoinAPI.swift */,
 				46BB106A2651917200C4FEA4 /* ExchangeModel.swift */,
+				461BB102265AD7C300314108 /* ExchangeHandlingModels.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 				78C23EAD26513F48009ABA44 /* AppDelegate.swift in Sources */,
 				46BB106526518B7900C4FEA4 /* QuoteCoinAPI.swift in Sources */,
 				78C23EAF26513F48009ABA44 /* SceneDelegate.swift in Sources */,
+				461BB103265AD7C300314108 /* ExchangeHandlingModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

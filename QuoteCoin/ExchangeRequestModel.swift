@@ -11,6 +11,7 @@ protocol ExchangeRequestModel {
     /// the name of the exchange
     var name: String { get }
     /// base URL used to connect to API
+    var scheme: String { get }
     var baseURL: String { get }
     var graphDataEndpoint: String { get }
     var tickerPriceEndpoint: String { get }
@@ -19,7 +20,8 @@ protocol ExchangeRequestModel {
 
 struct Binance: ExchangeRequestModel {
     var name: String = "Binance"
-    var baseURL: String = "https://api.binance.com"
+    var scheme: String = "https"
+    var baseURL: String = "api.binance.com"
     /// Endpoint for a specific tickers graph Data
     /// - param: symbol = Ticker. symbol to fetch graphdata
     /// - param: interval. intervals used in graph
@@ -48,7 +50,8 @@ struct Binance: ExchangeRequestModel {
 
 struct CoinBase: ExchangeRequestModel {
     var name: String = "Coinbase"
-    var baseURL: String = "https://api.pro.coinbase.com"
+    var scheme: String = "https"
+    var baseURL: String = "api.pro.coinbase.com"
     /// endpoint for getting graph data for specified coin pair
     /// - param: $CoinPair must be replaced w valid coin pair to get data. I.E BNB-BTC
     var graphDataEndpoint: String = "/products/$CoinPair/candles"
@@ -68,7 +71,8 @@ struct CoinBase: ExchangeRequestModel {
 
 struct Kraken: ExchangeRequestModel {
     var name: String = "Kraken"
-    var baseURL: String = "https://api.kraken.com/0"
+    var scheme: String = "https"
+    var baseURL: String = "api.kraken.com/0"
     /// endpoint returning all Open, high Low and Close data for given pair - requires API key and sign
     /// - param: pair is required. I.E pair=XBTUSD
     /// - param interval is default 1. change to 1 5 15 30 60 240 1440 10080 or 21600 (in minutes)
@@ -91,7 +95,8 @@ struct Kraken: ExchangeRequestModel {
 
 struct KuCoin: ExchangeRequestModel {
     var name: String = "KuCoin"
-    var baseURL: String = "https://api.kucoin.com"
+    var scheme: String = "https"
+    var baseURL: String = "api.kucoin.com"
     /// endpoint to get graph data for specified pair
     /// - param: symbol required. I.E symbol=BTC-USDT
     /// - param: startAt default 0. type: Long
@@ -122,7 +127,8 @@ struct KuCoin: ExchangeRequestModel {
 
 struct BitFinex: ExchangeRequestModel {
     var name: String = "BitFinex"
-    var baseURL: String = "https://api-pub.bitfinex.com"
+    var scheme: String = "https"
+    var baseURL: String = "api-pub.bitfinex.com"
     /// endpoint to return graph data, must replace params prefixed by $ with valid values
     /// - params:
     ///     - TimeFrame: $Timeframe. Available values: '1m', '5m', '15m', '30m', '1h', '3h', '6h', '12h', '1D', '7D', '14D', '1M'
@@ -158,7 +164,7 @@ struct BitFinex: ExchangeRequestModel {
     var graphDataEndpoint: String = "/v2/candles/trade:$TimeFrame:$Symbol/Section"
     /** The tickers endpoint provides a high level overview of the state of the market. It shows the current best bid and ask, the last traded price, as well as information on the daily volume and price movement over the last day. The endpoint can retrieve multiple tickers with a single query.
 
-     - parameter symbols required. Can be all. or I.E symbols=tBTCUSD,tLTCUSD,fUSD
+     - parameter symbols required. Can be ALL. or I.E symbols=tBTCUSD,tLTCUSD,fUSD
 
      -  returns:
      on trading pairs (ex. tBTCUSD)
@@ -249,4 +255,6 @@ struct BitFinex: ExchangeRequestModel {
     ///     ]
     ///
     var bookTickersEndpoint: String = "/v2/book/$Symbol/$Precision"
+
+    var allTickersEndpoint: String = "/v2/tickers"
 }

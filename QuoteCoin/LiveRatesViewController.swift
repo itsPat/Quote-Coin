@@ -30,6 +30,8 @@ class LiveRatesViewController: UIViewController {
         Coin(name: "Ripple", symbol: "XRP", priceUSD: 21.01, percentChange: 41.52),
     ]
 
+    let api = QuoteCoinAPI()
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -37,6 +39,14 @@ class LiveRatesViewController: UIViewController {
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         LiveCoinCell.registerCell(in: collectionView)
         setupSearchBar()
+        api.fetchAllExchanges { (exchanges) in
+            // we have api.allTickers available, or the list of all exchanges
+            print(self.api.allTickers.count)
+        } failure: { (error) in
+            // frowny error face?
+            print("💩")
+        }
+
     }
     
     // MARK: - Setup
@@ -71,17 +81,6 @@ extension LiveRatesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         LiveCoinCell.cell(for: collectionView, at: indexPath, with: coins[indexPath.item])
     }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let api = QuoteCoinAPI()
-        api.fetchExchangeModel(exchange: CoinBase()) { model in
-            print("\(model.tickers)")
-        } failure: { error in 
-            print("yay")
-        }
-
-    }
-    
 }
 
 

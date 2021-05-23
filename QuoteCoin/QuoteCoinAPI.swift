@@ -9,78 +9,116 @@
 import Foundation
 
 class QuoteCoinAPI {
+    let listOfPossibleExchanges: [ExchangeRequestModel] = [Binance(),
+                                                           BitFinex(),
+                                                           CoinBase(),
+                                                           Kraken(),
+                                                           KuCoin()]
+    var exchanges: [ExchangeModel]?
+    var allTickers: Set<Ticker> = []
 
-    func fetchExchangeModel(exchange: ExchangeRequestModel,
+
+    func fetchAllExchanges(success: @escaping ([ExchangeModel]) -> Void,
+                           failure: @escaping (Error?) -> Void) {
+        var exchanges = [ExchangeModel]()
+        for exchange in listOfPossibleExchanges {
+            let group = DispatchGroup()
+            group.enter()
+            self.fetchTickersFrom(exchange) { (model) in
+                exchanges.append(model)
+                group.leave()
+            } failure: { (error) in
+                failure(error)
+                group.leave()
+            }
+            group.wait()
+        }
+        self.exchanges = exchanges
+        success(exchanges)
+    }
+
+    /// fetch all tickers from specified exchange
+    func fetchTickersFrom(_ exchange: ExchangeRequestModel,
                             success: @escaping ((ExchangeModel) -> Void),
                             failure: @escaping ((Error?) -> Void)) {
 
-        var request: URLRequest
+        var components = URLComponents()
+        let endpoint = getAllTickersEndpoint(exchange)
+        components.host = exchange.baseURL
+        components.scheme = exchange.scheme
+        components.path = endpoint
 
-        switch exchange {
-        case let exchange as CoinBase:
-            let endpoint = exchange.allAssetsEndpoint
-            guard var baseURL = URL(string: exchange.baseURL) else {
-                // failure invalid request
-                return
+        if exchange is BitFinex {
+            components.queryItems = [ URLQueryItem(name: "symbols", value: "ALL") ]
+        }
+        var returnedModel = ExchangeModel(name: exchange.name, tickers: [])
+
+        let task = URLSession.shared.dataTask(with: components.url!) { (data, response, error) in
+            guard let data = data else { failure(error); return }
+            returnedModel.tickers = self.getTickersFrom(data, exchange: exchange)
+            if !returnedModel.tickers.isEmpty {
+                self.exchanges?.append(returnedModel)
+                for ticker in returnedModel.tickers {
+                    self.allTickers.insert(ticker)
+                }
+                success(returnedModel)
+            } else {
+                failure(error)
             }
-            baseURL.appendPathComponent(endpoint)
-            request = URLRequest(url: baseURL)
+        }
+        task.resume()
+    }
 
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                guard let data = data else { failure(error); return }
-                    do {
-                        let tickers = try JSONDecoder().decode([Ticker].self, from: data)
-                        success(ExchangeModel(name: exchange.name,
-                                              tickers: tickers))
-                    } catch {
-                        failure(error)
+    private func getAllTickersEndpoint(_ exchange: ExchangeRequestModel) -> String {
+        var endpoint = ""
+        switch exchange {
+        case let exchange as Binance:
+            endpoint = exchange.tickerPriceEndpoint
+        case let exchange as CoinBase:
+            endpoint = exchange.allAssetsEndpoint
+        case let exchange as Kraken:
+            endpoint = exchange.allPairsEndpoint
+        case let exchange as KuCoin:
+            endpoint = exchange.allTickersEndpoint
+        case let exchange as BitFinex:
+            endpoint = exchange.tickerPriceEndpoint
+        default:
+            return endpoint
+        }
+        return endpoint
+    }
+
+    private func getTickersFrom(_ data: Data, exchange: ExchangeRequestModel) -> [Ticker] {
+        switch exchange {
+        case is KuCoin:
+            let model = try? JSONDecoder().decode(KuCoinTickerReseponse.self, from: data)
+            return model?.data?.ticker ?? []
+        case is Kraken:
+            let model = try? JSONDecoder().decode(KrakenTickerResponse.self, from: data)
+            var tickers = [Ticker]()
+            for (_, ticker) in model?.result ?? [:] {
+                if let ticker = ticker {
+                    tickers.append(ticker)
                 }
             }
-            task.resume()
-        default:
-            guard let tickerURL = URL(string: exchange.baseURL + exchange.tickerPriceEndpoint) else {
-                // failure invalid request
-                return
+            return tickers
+        case is BitFinex:
+            var tickers = [Ticker]()
+            if let array = try? JSONSerialization.jsonObject(with: data, options: []) as? [[Any]] {
+                for ticker in array {
+                    if let symbol = ticker[0] as? String,
+                       let price = ticker[7] as? Double {
+                        let ticker = Ticker(symbol: symbol,
+                                            price: String(price),
+                                            id: symbol)
+                        tickers.append(ticker)
+                    }
+                }
             }
-            request = URLRequest(url: tickerURL)
-
+            return tickers
+        default:
+            let model = try? JSONDecoder().decode([Ticker].self, from: data)
+            return model ?? []
         }
-    }
-
-
-
-}
-
-extension QuoteCoinAPI {
-    /// This API should be used in API handlers, to convert data types or throw an error.
-    ///
-    /// Usage example:
-    /// let responseDict: [String: Any] = try convertOrThrow(serviceResponse)
-    public func convertOrThrow<T>(_ response: Any?) throws -> T {
-        guard let result = response as? T else {
-            throw NSError()
-        }
-
-        return result
-    }
-
-    /// This is a mehthod to decode generic type from provided `Dictionary` response.
-    ///
-    /// Usage Example:
-    /// let model: CustomerProfileModel = try decodeJSONOrThrow(serviceResponse)
-    ///
-    /// - Parameters:
-    ///   - response: Any object, which could be decoded to a dictionary.
-    ///   - allowDebugPrint: A boolean value indicating wether or not to print JSON response on console.
-    ///                      Default is false
-    /// - Returns: generic type, that conforms to Decodable protocol
-    /// - Throws: instance of Error
-    public func decodeJSONOrThrow<T: Decodable>(_ response: Any?) throws -> T {
-        let responseDict: [String: Any] = try convertOrThrow(response)
-
-        let data = try JSONSerialization.data(withJSONObject: responseDict, options: [])
-        let decoder = JSONDecoder()
-        let model = try decoder.decode(T.self, from: data)
-        return model
     }
 }

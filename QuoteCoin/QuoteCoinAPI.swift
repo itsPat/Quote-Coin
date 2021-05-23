@@ -11,7 +11,7 @@ import Foundation
 class QuoteCoinAPI {
 
     func fetchExchangeModel(exchange: ExchangeRequestModel,
-                            success: @escaping (() -> Void),
+                            success: @escaping ((ExchangeModel) -> Void),
                             failure: @escaping ((Error?) -> Void)) {
 
         var request: URLRequest
@@ -24,18 +24,19 @@ class QuoteCoinAPI {
                 return
             }
             baseURL.appendPathComponent(endpoint)
-//            tickerURL.pathComponents["$CoinPair"] = "BNB-BTC"
             request = URLRequest(url: baseURL)
 
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if error != nil || data == nil {
-                    failure(error)
-                }
-
-                do {
-                    let decoder = JSONDecoder()
+                guard let data = data else { failure(error); return }
+                    do {
+                        let tickers = try JSONDecoder().decode([Ticker].self, from: data)
+                        success(ExchangeModel(name: exchange.name,
+                                              tickers: tickers))
+                    } catch {
+                        failure(error)
                 }
             }
+            task.resume()
         default:
             guard let tickerURL = URL(string: exchange.baseURL + exchange.tickerPriceEndpoint) else {
                 // failure invalid request

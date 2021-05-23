@@ -15,28 +15,50 @@ struct Ticker: Codable {
 //    var dayChangeData: [Any]?
 //    var graphData: [Any]?
 
-
-    init(_ exchange: ExchangeRequestModel, from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
+        let keyMap = [
+            "symbol": ["symbol", "display_name", "wsname"],
+            "price": ["price"],
+        ]
+        let container = try decoder.container(keyedBy: AnyKey.self)
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        var symbolKey = "symbol"
-        var priceKey = "price"
-        switch exchange.self {
-        case is Binance:
-            price = try values.decode(String.self, forKey: CodingKeys(stringValue: priceKey) ?? .price)
-        case is CoinBase:
-            symbolKey = "display_name"
-            id = try values.decode(String.self, forKey: .id)
-        case is Kraken:
-            symbolKey = "wsname"
-        default:
-            priceKey = ""
+        func decode<Value>(_ key: String) throws -> Value where Value: Decodable {
+            return try container.decode(Value.self, forMappedKey: key, in: keyMap)
         }
 
-        symbol = try values.decode(String.self, forKey: CodingKeys(stringValue: symbolKey) ?? .symbol)
+        symbol = try decode("symbol")
+        id = try decode("id")
+        price = try values.decodeIfPresent(String.self, forKey: .price)
     }
 }
 
 struct ExchangeModel {
     let name: String
     let tickers: [Ticker]
+}
+// used for handling multiple coding keys
+struct AnyKey: CodingKey {
+    var stringValue: String
+    var intValue: Int?
+    init(stringValue: String) {
+        self.stringValue = stringValue
+    }
+
+    init?(intValue: Int) {
+        self.stringValue = String(intValue)
+        self.intValue = intValue
+    }
+}
+
+extension KeyedDecodingContainer where K == AnyKey {
+    func decode<T>(_ type: T.Type, forMappedKey key: String, in keyMap: [String: [String]]) throws -> T where T : Decodable{
+
+        for key in keyMap[key] ?? [] {
+            if let value = try? decode(T.self, forKey: AnyKey(stringValue: key)) {
+                return value
+            }
+        }
+
+        return try decode(T.self, forKey: AnyKey(stringValue: key))
+    }
 }

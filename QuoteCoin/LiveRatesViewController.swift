@@ -74,9 +74,9 @@ extension LiveRatesViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let api = QuoteCoinAPI()
-        api.fetchExchangeModel(exchange: CoinBase()) {
-            print("woo")
-        } failure: {
+        api.fetchExchangeModel(exchange: CoinBase()) { model in
+            print("\(model.tickers)")
+        } failure: { error in 
             print("yay")
         }
 

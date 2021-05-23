@@ -71,6 +71,16 @@ extension LiveRatesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         LiveCoinCell.cell(for: collectionView, at: indexPath, with: coins[indexPath.item])
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let api = QuoteCoinAPI()
+        api.fetchExchangeModel(exchange: CoinBase()) {
+            print("woo")
+        } failure: {
+            print("yay")
+        }
+
+    }
     
 }
 
@@ -90,5 +100,5 @@ extension LiveRatesViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDelegate
 
 extension LiveRatesViewController: UICollectionViewDelegate {
-    
+
 }

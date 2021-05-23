@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46BB106226518B4D00C4FEA4 /* ExchangeRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BB106126518B4D00C4FEA4 /* ExchangeRequestModel.swift */; };
+		46BB106526518B7900C4FEA4 /* QuoteCoinAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BB106426518B7900C4FEA4 /* QuoteCoinAPI.swift */; };
+		46BB106B2651917200C4FEA4 /* ExchangeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BB106A2651917200C4FEA4 /* ExchangeModel.swift */; };
 		7847BC87265156BE0000A888 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7847BC86265156BE0000A888 /* Double+Extension.swift */; };
 		78C23EAD26513F48009ABA44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C23EAC26513F48009ABA44 /* AppDelegate.swift */; };
 		78C23EAF26513F48009ABA44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C23EAE26513F48009ABA44 /* SceneDelegate.swift */; };
@@ -20,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		46BB106126518B4D00C4FEA4 /* ExchangeRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRequestModel.swift; sourceTree = "<group>"; };
+		46BB106426518B7900C4FEA4 /* QuoteCoinAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCoinAPI.swift; sourceTree = "<group>"; };
+		46BB106A2651917200C4FEA4 /* ExchangeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeModel.swift; sourceTree = "<group>"; };
 		7847BC86265156BE0000A888 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		78C23EA926513F48009ABA44 /* QuoteCoin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuoteCoin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C23EAC26513F48009ABA44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +51,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46BB106026518B3200C4FEA4 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				46BB106126518B4D00C4FEA4 /* ExchangeRequestModel.swift */,
+				46BB106426518B7900C4FEA4 /* QuoteCoinAPI.swift */,
+				46BB106A2651917200C4FEA4 /* ExchangeModel.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		7847BC85265156AB0000A888 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -72,6 +88,7 @@
 		78C23EAB26513F48009ABA44 /* QuoteCoin */ = {
 			isa = PBXGroup;
 			children = (
+				46BB106026518B3200C4FEA4 /* API */,
 				78C23ED1265142B0009ABA44 /* Views */,
 				78C23ED0265142A2009ABA44 /* ViewControllers */,
 				78C23EB226513F48009ABA44 /* Main.storyboard */,
@@ -183,11 +200,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46BB106B2651917200C4FEA4 /* ExchangeModel.swift in Sources */,
 				78C23ED52651438C009ABA44 /* LiveCoinCell.swift in Sources */,
 				78C23EB126513F48009ABA44 /* LiveRatesViewController.swift in Sources */,
 				7847BC87265156BE0000A888 /* Double+Extension.swift in Sources */,
 				78C23EDE26514A3A009ABA44 /* SearchBar.swift in Sources */,
+				46BB106226518B4D00C4FEA4 /* ExchangeRequestModel.swift in Sources */,
 				78C23EAD26513F48009ABA44 /* AppDelegate.swift in Sources */,
+				46BB106526518B7900C4FEA4 /* QuoteCoinAPI.swift in Sources */,
 				78C23EAF26513F48009ABA44 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

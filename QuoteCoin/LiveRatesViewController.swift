@@ -36,9 +36,9 @@ class LiveRatesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.titleView = SearchBar(frame: .zero)
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         LiveCoinCell.registerCell(in: collectionView)
-        setupSearchBar()
         api.fetchAllExchanges { (exchanges) in
             // we have api.allTickers available, or the list of all exchanges
             let usdTickers = self.api.allTickers.filter {
@@ -52,24 +52,6 @@ class LiveRatesViewController: UIViewController {
             print("💩")
         }
 
-    }
-    
-    // MARK: - Setup
-    
-    func setupSearchBar() {
-        let searchBar = SearchBar(frame: .zero)
-        navigationItem.titleView = searchBar
-        
-        if let container = searchBar.superview {
-            searchBar.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                searchBar.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 20),
-                searchBar.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -20),
-                searchBar.topAnchor.constraint(equalTo: container.topAnchor),
-                searchBar.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-                searchBar.heightAnchor.constraint(equalToConstant: 50)
-            ])
-        }
     }
 
 }
@@ -86,6 +68,7 @@ extension LiveRatesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         LiveCoinCell.cell(for: collectionView, at: indexPath, with: coins[indexPath.item])
     }
+    
 }
 
 

@@ -45,10 +45,15 @@ class SearchBar: UIView {
         [leftButton, textField, rightButton].forEach {
             stack.addArrangedSubview($0)
         }
-        setupConstraints()
+        constrainSubviews()
     }
     
-    func setupConstraints() {
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        constrainToSuperview()
+    }
+    
+    func constrainSubviews() {
         stack.translatesAutoresizingMaskIntoConstraints = false
         leftButton.translatesAutoresizingMaskIntoConstraints = false
         rightButton.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +71,19 @@ class SearchBar: UIView {
             stack.bottomAnchor.constraint(equalTo: bottomAnchor),
             stack.leftAnchor.constraint(equalTo: leftAnchor, constant: 6),
             stack.rightAnchor.constraint(equalTo: rightAnchor, constant: -6)
+        ])
+        layoutIfNeeded()
+    }
+    
+    func constrainToSuperview() {
+        guard let superview = superview else { return }
+        translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            leftAnchor.constraint(equalTo: superview.leftAnchor, constant: 20),
+            rightAnchor.constraint(equalTo: superview.rightAnchor, constant: -20),
+            topAnchor.constraint(equalTo: superview.topAnchor),
+            bottomAnchor.constraint(equalTo: superview.bottomAnchor),
+            heightAnchor.constraint(equalToConstant: 50)
         ])
         layoutIfNeeded()
     }

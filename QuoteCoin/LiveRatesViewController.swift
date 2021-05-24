@@ -41,7 +41,12 @@ class LiveRatesViewController: UIViewController {
         setupSearchBar()
         api.fetchAllExchanges { (exchanges) in
             // we have api.allTickers available, or the list of all exchanges
-            print(self.api.allTickers.count)
+            let usdTickers = self.api.allTickers.filter {
+                $0.symbol?.contains("USD") ?? false &&
+                $0.price != nil &&
+                !($0.id?.contains("TEST") ?? true)
+            }
+            print(usdTickers)
         } failure: { (error) in
             // frowny error face?
             print("💩")

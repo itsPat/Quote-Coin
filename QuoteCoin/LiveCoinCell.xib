@@ -98,6 +98,7 @@
             </constraints>
             <size key="customSize" width="449" height="83"/>
             <connections>
+                <outlet property="imageView" destination="BLv-OQ-jQa" id="j4t-BK-AIV"/>
                 <outlet property="nameLabel" destination="SoC-QV-1fu" id="Jgu-7g-7Ks"/>
                 <outlet property="percentChangeLabel" destination="bN4-gV-D0i" id="Ye3-AV-wGR"/>
                 <outlet property="priceLabel" destination="lPF-uP-Nos" id="r3p-bi-ke4"/>

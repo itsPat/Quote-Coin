@@ -39,14 +39,15 @@ class LiveRatesViewController: UIViewController {
         navigationItem.titleView = SearchBar(frame: .zero)
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         LiveCoinCell.registerCell(in: collectionView)
-        api.fetchAllExchanges { (exchanges) in
+        api.fetchAllExchanges { _ in
             // we have api.allTickers available, or the list of all exchanges
             let usdTickers = self.api.allTickers.filter {
                 $0.symbol?.contains("USD") ?? false &&
                 $0.price != nil &&
-                !($0.id?.contains("TEST") ?? true)
+                !($0.id?.contains("TEST") ?? false)
             }
-            print(usdTickers)
+            usdTickers.forEach { print("⭐️ symbol: \($0.symbol) -> \($0.price)") }
+            print(usdTickers.count)
         } failure: { (error) in
             // frowny error face?
             print("💩")

@@ -16,6 +16,7 @@ protocol ExchangeRequestModel {
     var graphDataEndpoint: String { get }
     var tickerPriceEndpoint: String { get }
     var bookTickersEndpoint: String { get }
+    var allAssetsEndpoint: String { get }
 }
 
 struct Binance: ExchangeRequestModel {
@@ -28,6 +29,20 @@ struct Binance: ExchangeRequestModel {
     /// - param: startTime. start time for graph If startTime and endTime are not sent, the most recent klines are returned.
     /// - param: endTime. end time for graph
     /// - param: limit. limit for graph
+    /// [
+    ///     1499040000000,      // Open time
+    ///     "0.01634790",       // Open
+    ///     "0.80000000",       // High
+    ///     "0.01575800",       // Low
+    ///     "0.01577100",       // Close
+    ///     "148976.11427815",  // Volume
+    ///     1499644799999,      // Close time
+    ///     "2434.19055334",    // Quote asset volume
+    ///     308,                // Number of trades
+    ///     "1756.87402397",    // Taker buy base asset volume
+    ///     "28.46694368",      // Taker buy quote asset volume
+    ///     "17928899.62484339" // Ignore.
+    ///   ]
     var graphDataEndpoint: String = "/api/v3/klines"
     /// endpoint for the current price of a particular ticker
     /// - the param symbol isnt required, but will return all symbols if missing
@@ -46,6 +61,7 @@ struct Binance: ExchangeRequestModel {
      If any symbol provided in either symbol or symbols do not exist, the endpoint will throw an error.
      */
     var exchangeInfoEndpoint: String = "/api/v3/exchangeInfo"
+    var allAssetsEndpoint: String = "/api/v3/ticker/price"
 }
 
 struct CoinBase: ExchangeRequestModel {
@@ -54,16 +70,17 @@ struct CoinBase: ExchangeRequestModel {
     var baseURL: String = "api.pro.coinbase.com"
     /// endpoint for getting graph data for specified coin pair
     /// - param: $CoinPair must be replaced w valid coin pair to get data. I.E BNB-BTC
-    var graphDataEndpoint: String = "/products/$CoinPair/candles"
+    /// returns: [ time, low, high, open, close, volume ]
+    var graphDataEndpoint: String = "/products/$%@/candles"
     /// endpoint to get value of coin in different currencies
     /// - param: $CoinPair must be replaced to receive valid ticker info. I.E BNB-BTC
-    var tickerPriceEndpoint: String = "/products/$CoinPair/ticker"
+    var tickerPriceEndpoint: String = "/products/%@/ticker"
     /// endpoint to get orderBook
     /// - param $CoinPair must be replaced w valid coin pair. I.E BNB-BTC
-    var bookTickersEndpoint: String = "/products/$CoinPair/book"
+    var bookTickersEndpoint: String = "/products/%@/book"
     /// endpoint to get 24hr change for specific coin pair
     /// - param: $CoinPair must be replaced to get valid stats. I.E BNB-BTC
-    var dayAvgPriceEndpoint: String = "/products/$CoinPair/stats"
+    var dayAvgPriceEndpoint: String = "/products/%@/stats"
     /// get info about all assets available
 
     var allAssetsEndpoint: String = "/products"
@@ -122,7 +139,7 @@ struct KuCoin: ExchangeRequestModel {
     var dayAvgPriceEndpoint: String = "/api/v1/market/stats"
     /// endpoint to return a list of available markets
     var maketsEndpoint: String = "/api/v1/markets"
-    var allTickersEndpoint: String = "/api/v1/market/allTickers"
+    var allAssetsEndpoint: String = "/api/v1/market/allTickers"
 }
 
 struct BitFinex: ExchangeRequestModel {
@@ -161,7 +178,7 @@ struct BitFinex: ExchangeRequestModel {
     ///            ...
     ///         ]
 
-    var graphDataEndpoint: String = "/v2/candles/trade:$TimeFrame:$Symbol/Section"
+    var graphDataEndpoint: String = "/v2/candles/trade:%@:%@/hist"
     /** The tickers endpoint provides a high level overview of the state of the market. It shows the current best bid and ask, the last traded price, as well as information on the daily volume and price movement over the last day. The endpoint can retrieve multiple tickers with a single query.
 
      - parameter symbols required. Can be ALL. or I.E symbols=tBTCUSD,tLTCUSD,fUSD
@@ -254,7 +271,7 @@ struct BitFinex: ExchangeRequestModel {
     ///       ...
     ///     ]
     ///
-    var bookTickersEndpoint: String = "/v2/book/$Symbol/$Precision"
+    var bookTickersEndpoint: String = "/v2/book/&@/&@"
 
-    var allTickersEndpoint: String = "/v2/tickers"
+    var allAssetsEndpoint: String = "/v2/tickers"
 }

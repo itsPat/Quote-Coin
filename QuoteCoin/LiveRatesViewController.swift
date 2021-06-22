@@ -39,14 +39,16 @@ class LiveRatesViewController: UIViewController {
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         LiveCoinCell.registerCell(in: collectionView)
         setupSearchBar()
-        api.fetchAllExchanges { (exchanges) in
-            // we have api.allTickers available, or the list of all exchanges
-            print(self.api.allTickers.count)
-        } failure: { (error) in
-            // frowny error face?
-            print("💩")
+        api.fetchAllExchanges { (res) in
+            switch res {
+            case .success(let model):
+                // we have api.allTickers available, or the list of all exchanges
+                print(self.api.allTickers.count)
+            case .failure(let err):
+                // frowny error face?
+                print("💩")
+            }
         }
-
     }
     
     // MARK: - Setup
